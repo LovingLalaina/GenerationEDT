@@ -5,26 +5,26 @@ import Edt from "../model/edt.js";
 import Classe from "../model/classe.js";
 import GenerateEdt from "../model/generateEdt.js";
 
-// Function to generate a timetable
+
 export const generateTimetable = async (req, res) => {
   try {
-    // Fetch data from models
+  
     const profs = await Prof.find();
     const matieres = await Matiere.find();
     const niveaux = await Niveau.find();
     const classes = await Classe.find();
     const cours = await Edt.find();
 
-    // Your timetable generation logic goes here
+    
     const timetable = generateTimetableLogic(profs, matieres, niveaux, classes , cours);
 
-    // Save the generated timetable to the database (assuming Edt is your timetable model)
+    
     const saveToBase = await Promise.all(
       timetable.map((elem) => {
         const saveGenerate = new GenerateEdt({
           matiere: elem.matiere,
-          heure: elem.heure, // Replace with your logic for generating time
-          date: elem.date, // Replace with your logic for generating date
+          heure: elem.heure, 
+          date: elem.date, 
           prof: elem.prof,
           niveau: elem.niveau,
           classe: elem.classe,
@@ -40,31 +40,28 @@ export const generateTimetable = async (req, res) => {
   }
 };
 
-// Placeholder for your actual timetable generation logic
+
 const generateTimetableLogic = (profs, matieres, niveaux, classes , cours) => {
   const timetable = [];
-  const processedNiveauNoms = new Set(); // Store processed niveau.nom values
+  const processedNiveauNoms = new Set(); 
 
-  // Replace this with your actual timetable generation logic
-  // Iterate over professors, matieres, niveaux, and classes to create timetable entries
+  
   for (const prof of profs) {
     for (const matiere of matieres) {
       for (const niveau of niveaux) {
-        // Check if this niveau.nom has been processed
           for (const classe of classes) {
-
             for( const cour of cours) {
               if( prof._id.toString() == cour.professeur.toString() && matiere._id.toString() == cour.matiere.toString())
               {
-                  // Replace this with your actual logic for creating timetable entries
+                  
                   const entry = {
                     matiere: matiere._id,
-                    heure: prof.preferences[0].heures[0], // Replace with your logic for generating time
-                    date: new Date(), // Replace with your logic for generating date
+                    heure: prof.preferences[0].heures[0], 
+                    date: new Date(), 
                     prof: prof._id,
                     niveau: niveau._id,
                     classe: classe._id,
-                    // Add more details as needed
+                    
                                 }
                   timetable.push(entry);
               }
@@ -72,7 +69,7 @@ const generateTimetableLogic = (profs, matieres, niveaux, classes , cours) => {
             
           }
 
-          // Mark this niveau.nom as processed
+          
           processedNiveauNoms.add(niveau.nom);
       }
     }
