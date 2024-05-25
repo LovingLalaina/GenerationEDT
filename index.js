@@ -9,8 +9,8 @@ const app = express();
 
 const connect = async () => {
   try {
-    await mongoose.connect("mongodb://127.0.0.1:27017/generate-edt");
-    console.log("generation connected");
+    await mongoose.connect("mongodb+srv://lovinglalainaa:s6QZVUXEXQgvlvhp@cluster0.zauooiv.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0/generate-edt");
+    console.log("API connected to DB");
   } catch (err) {
     throw err;
   }
@@ -26,5 +26,5 @@ app.use("/api", generateRouter);
 
 app.listen(5000, () => {
   connect();
-  console.log(`server connect at https://localhost:5000}`);
+  console.log(`API deploye`);
 });
