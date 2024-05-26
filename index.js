@@ -10,13 +10,17 @@ const app = express();
 const connect = async () => {
   try {
     await mongoose.connect("mongodb+srv://lovinglalainaa:s6QZVUXEXQgvlvhp@cluster0.zauooiv.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0/generate-edt");
-    console.log("API connected to DB");
+    console.log("connected to DB");
   } catch (err) {
     throw err;
   }
 };
 
-app.use(cors());
+const corsOptions = {
+  origin: ["http://localhost:3000", "https://front-gestion-edt.vercel.app"],
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: true }));
